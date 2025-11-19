@@ -34,7 +34,7 @@ To run vg2wga, use the following command format:
 ```
 
 ### block-detector
-block-detector is based on the algorithm of SibeliaZ-LCB, but operates on a variation graph instead of a compacted de Bruijn graph. The MSA in each block is performed using a modification of the library [poapy](https://github.com/ljdursi/poapy) poapy.
+block-detector is based on the algorithm of SibeliaZ-LCB, but operates on a variation graph instead of a compacted de Bruijn graph. The MSA in each block is performed using a modification of the library [poapy](https://github.com/ljdursi/poapy).
 #### Usage
 To run block-detector run the following-commands:
 ```
