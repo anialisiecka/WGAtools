@@ -9,7 +9,6 @@ import numpy
 import textwrap
 import collections
 
-
 class Node(object):
     def __init__(self, nodeID=-1, base='N'):
         self.ID = nodeID
@@ -50,6 +49,7 @@ class Node(object):
                 nextID = e
         return nextID
 
+
     @property
     def inDegree(self):
         return len(self.inEdges)
@@ -68,14 +68,13 @@ class Node(object):
             labelset = labelset.union(e.labels)
         return list(labelset)
 
-
 class Edge(object):
     def __init__(self, inNodeID=-1, outNodeID=-1, label=None):
         self.inNodeID  = inNodeID
         self.outNodeID = outNodeID
         if label is None:
             self.labels = []
-        elif type(label) is list:
+        elif type(label) == list:
             self.labels = label
         else:
             self.labels = [label]
@@ -91,7 +90,6 @@ class Edge(object):
             return nodestr
         else:
             return nodestr + self.labels.__str__()
-
 
 class POAGraph(object):
     def addUnmatchedSeq(self, seq, label=None, updateSequences=True):
@@ -180,8 +178,8 @@ class POAGraph(object):
         return self._nedges
 
     def _simplified_graph_rep(self):
-        # TODO: The need for this suggests that the way the graph is currently represented
-        # isn't really right and needs some rethinking.
+        ## TODO: The need for this suggests that the way the graph is currently represented
+        ## isn't really right and needs some rethinking.
 
         node_to_pn = {}
         pn_to_nodes = {}
@@ -217,18 +215,18 @@ class POAGraph(object):
         sortedlist = []
         completed = set([])
 
-        #
-        # The topological sort of this graph is complicated by the alignedTo edges;
-        # we want to nodes connected by such edges to remain near each other in the
-        # topological sort.
-        #
-        # Here we'll create a simple version of the graph that merges nodes that
-        # are alignedTo each other, performs the sort, and then decomposes the
-        # 'pseudonodes'.
-        #
-        # The need for this suggests that the way the graph is currently represented
-        # isn't quite right and needs some rethinking.
-        #
+        ##
+        ## The topological sort of this graph is complicated by the alignedTo edges;
+        ## we want to nodes connected by such edges to remain near each other in the
+        ## topological sort.
+        ##
+        ## Here we'll create a simple version of the graph that merges nodes that
+        ## are alignedTo each other, performs the sort, and then decomposes the
+        ## 'pseudonodes'.
+        ##
+        ## The need for this suggests that the way the graph is currently represented
+        ## isn't quite right and needs some rethinking.
+        ##
 
         pseudonodes = self._simplified_graph_rep()
 
@@ -308,6 +306,7 @@ class POAGraph(object):
         headID = None
         tailID = None
 
+        walk_to_poa = []
         # head, tail of sequence may be unaligned; just add those into the
         # graph directly
         validstringidxs = [si for si in stringidxs if si is not None]
@@ -349,22 +348,18 @@ class POAGraph(object):
                         self.nodedict[otherNodeID].alignedTo.append(nodeID)
                 else:
                     nodeID = foundNode
-
+            walk_to_poa.append(nodeID)
             self.addEdge(headID, nodeID, label)
             headID = nodeID
             if firstID is None:
                 firstID = headID
 
-        # finished the unaligned portion: now add an edge from the current headID to the tailID.
         self.addEdge(headID, tailID, label)
-
-        # resort
         self.toposort()
-
         self.__seqs.append(seq)
         self.__labels.append(label)
         self.__starts.append(firstID)
-        return
+        return walk_to_poa
 
     def consensus(self, excludeLabels=None):
         if excludeLabels is None:
@@ -383,7 +378,7 @@ class POAGraph(object):
 
             for neighbourID in self.nodedict[nodeID].outEdges:
                 e = self.nodedict[nodeID].outEdges[neighbourID]
-                weight = len([label for label in e.labels if label not in excludeLabels])
+                weight = len([l for l in e.labels if l not in excludeLabels])
                 weightScoreEdge = (weight, scores[neighbourID], neighbourID)
 
                 if weightScoreEdge > bestWeightScoreEdge:
@@ -423,8 +418,8 @@ class POAGraph(object):
 
                 labelcounts = collections.defaultdict(int)
                 for ll in labellists:
-                    for label in ll:
-                        labelcounts[label] += 1
+                    for l in ll:
+                        labelcounts[l] += 1
 
                 for label, seq in zip(self.__labels, self.__seqs):
                     if label in labelcounts and labelcounts[
@@ -445,7 +440,6 @@ class POAGraph(object):
         #    of the node itself, or the earliest node it is aligned to.
         column_index = {}
         current_column = 0
-
         # go through nodes in toposort order
         ni = self.nodeiterator()
         for node in ni():
@@ -459,7 +453,6 @@ class POAGraph(object):
             column_index[node.ID] = found_idx
 
         ncolumns = current_column
-
         # Step 2: given the column indexes, populate the strings
         #   corresponding to the sequences inserted in the graph
         seqnames = []
@@ -474,14 +467,15 @@ class POAGraph(object):
                 curnode_id = node.nextNode(label)
             alignstrings.append("".join(charlist))
 
-        # Step 3: Same as step 2, but with consensus sequences
-        consenses = self.allConsenses()
-        for i, consensus in enumerate(consenses):
-            seqnames.append('Consensus'+str(i))
-            charlist = ['-']*ncolumns
-            for path, base in zip(consensus[0], consensus[1]):
-                charlist[column_index[path]] = base
-            alignstrings.append("".join(charlist))
+        # # Step 3: Same as step 2, but with consensus sequences
+        # print('CONSENSUS')
+        # consenses = self.allConsenses()
+        # for i, consensus in enumerate(consenses):
+        #     seqnames.append('Consensus'+str(i))
+        #     charlist = ['-']*ncolumns
+        #     for path, base in zip(consensus[0], consensus[1]):
+        #         charlist[column_index[path]] = base
+        #     alignstrings.append("".join(charlist))
 
         return list(zip(seqnames, alignstrings))
 
@@ -584,3 +578,4 @@ class POAGraph(object):
                 </html>
                 """
         outfile.write(textwrap.dedent(footer))
+
