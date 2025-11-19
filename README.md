@@ -1,4 +1,4 @@
-# Model transformations
+# Model transformations between pangenome graphs
 
 ## Transformation of WGAs into VGs
 wga2vg is an algorithm that transforms a WGA representation of a sequence set into a compatible and compact VG representation.
