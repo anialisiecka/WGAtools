@@ -50,6 +50,3 @@ The following not required flags can be used.
     --mismatch - Mismatch penalty in alignment (used if --align is True). Default to -4.
     --gap - Gap penalty in alignment (used if --align is True). Default to -8.
 ```
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
