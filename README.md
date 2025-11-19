@@ -19,21 +19,23 @@ python wga2vg.py <input_maf> <output_gfa>
 
 ## Transformation of WGAs into VGs
 vg2wga and block-detector are two algorithms transforming VGs into WGAs.
+### vg2wga
 In WGA graphs constructed using vg2wga, blocks correspond to the nodes of the input VGs.
-### Installation of vg2wga
+#### Installation
 To install vg2wga, download the repo, then run the following commands:
 ```
 cd vg2wga
 g++ -O3 vg2wga.cpp -o vg2wga
 ```
-### Usage of vg2wga
+#### Usage
 To run vg2wga, use the following command format:
 ```
 ./vg2wga <input_gfa> <output_maf>
 ```
-block-detector is based on the algorithm of SibeliaZ-LCB, but operates on a variation graph instead of a compacted de Bruijn graph. The MSA in each block is performed using a modification of the library poapy.
 
-## Usage of block-detector
+### block-detector
+block-detector is based on the algorithm of SibeliaZ-LCB, but operates on a variation graph instead of a compacted de Bruijn graph. The MSA in each block is performed using a modification of the library poapy.
+#### Usage
 To run block-detector run the following-commands:
 ```
 cd block_detector
