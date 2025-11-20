@@ -1,5 +1,6 @@
 # Model transformations between pangenome graphs
-
+Whole Genome Alignment (WGA) graphs are bidirected graphs with nodes labeled with multiple sequence alignments of homologous genome fragments.
+Similarly to WGAs, variation graphs (VG) are founded on bidirected graphs, but their nodes are labeled with single DNA sequences. Therefore, VGs do not represent full alignments, they only indicate related identical nucleotides.
 ## Transformation of WGAs into VGs
 wga2vg is an algorithm that transforms a WGA representation of a sequence set into a compatible and compact VG representation. wga2vg requires as input a whole genome alignment graph in MAF format (Multiple Alignment File) and outputs a variation graph in GFA format (Graphical Fragment Assembly). WGA blocks consisting of a single sequence and built from uncovered fragments of the input sequences should be added to the input MAF file.
 
