@@ -1,7 +1,7 @@
 # Model transformations between pangenome graphs
 
 ## Transformation of WGAs into VGs
-wga2vg is an algorithm that transforms a WGA representation of a sequence set into a compatible and compact VG representation.
+wga2vg is an algorithm that transforms a WGA representation of a sequence set into a compatible and compact VG representation. wga2vg requires as input a whole genome alignment graph in MAF format (Multiple Alignment File) and outputs a variation graph in GFA format (Graphical Fragment Assembly). WGA blocks consisting of a single sequence and built from uncovered fragments of the input sequences should be added to the input MAF file.
 
 ### Usage
 1. Change directory:
@@ -12,13 +12,13 @@ cd wga2vg
 ```
 python addMissingBlocks.py <input_maf> <input_fasta> <output_maf>
 ```
-4. Run wga2vg:
+4. Run wga2vg on MAF file taht covers the entire input sequences (i.e. the output of the previous step):
 ```
 python wga2vg.py <input_maf> <output_gfa>
 ```
 
 ## Transformation of WGAs into VGs
-vg2wga and block-detector are two algorithms transforming VGs into WGAs.
+vg2wga and block-detector are two algorithms transforming VGs into WGAs. vg2wga requires as input a variation graph in GFA format (Graphical Fragment Assembly) and outputs a whole genome alignment graph in MAF format (Multiple Alignment File).
 ### vg2wga
 In WGA graphs constructed using vg2wga, blocks correspond to the nodes of the input VGs.
 #### Installation
@@ -34,7 +34,7 @@ To run vg2wga, use the following command format:
 ```
 
 ### block-detector
-block-detector is based on the algorithm of SibeliaZ-LCB, but operates on a variation graph instead of a compacted de Bruijn graph. The MSA in each block is performed using a modification of the library [poapy](https://github.com/ljdursi/poapy).
+block-detector is based on the algorithm of SibeliaZ-LCB, but operates on a variation graph instead of a compacted de Bruijn graph. The MSA in each block is performed using a modification of the library [poapy](https://github.com/ljdursi/poapy). block-detector requires as input a variation graph in GFA format (Graphical Fragment Assembly) and outputs a whole genome alignment graph in MAF format (Multiple Alignment File).
 #### Usage
 To run block-detector run the following-commands:
 ```
