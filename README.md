@@ -12,7 +12,7 @@ cd wga2vg
 ```
 python addMissingBlocks.py <input_maf> <input_fasta> <output_maf>
 ```
-4. Run wga2vg on MAF file taht covers the entire input sequences (i.e. the output of the previous step):
+4. Run wga2vg on MAF file that covers the entire input sequences (i.e. the output of the previous step):
 ```
 python wga2vg.py <input_maf> <output_gfa>
 ```
