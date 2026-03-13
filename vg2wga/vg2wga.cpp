@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
         maf_file << "##maf version=1 scoring=tba.v8\n\n";
         for (int i = 1; i < blocks.size(); i++)
         {
-                if ((blocks[i].size()<=45)&&(blocks[i].size()>1)) {
+                if (blocks[i].size()>1) {
                         maf_file << "a\n";
                         for (auto & block: blocks[i])
                         {
